@@ -55,9 +55,9 @@ func main() {
 
 	corrId := binary.BigEndian.Uint32(buff[8:12])
 	fmt.Println("correlation ID: ", corrId)
-	
-	resp := []byte{00,00,00,00}
-	copy(resp, buff[8:12])
+	resp := make([]byte, 8)
+	copy(resp,[]byte{00,00,00,00})
+	copy(resp[4:], buff[8:12])
 	
 	conn.Write([]byte(resp))
 }
