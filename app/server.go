@@ -28,7 +28,19 @@ func main() {
 	}
 
 	buff := []byte{}
-	conn.Read(buff)
+	length, connErr := conn.Read(buff)
 	fmt.Println(string(buff))
+	if connErr != nil {
+		fmt.Println("Error reading from connection: ", connErr.Error())
+		os.Exit(1)
+	}
+
+	if length == 0 {
+		fmt.Println("Empty message from connection")
+		os.Exit(1)
+	}
+
+	fmt.Println(buff)
+
 	conn.Write([]byte("000007"))
 }
