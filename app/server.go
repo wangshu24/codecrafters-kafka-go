@@ -27,6 +27,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	// buff := []byte{}
+	buff := []byte{}
+	conn.Read(buff)
+	fmt.Println(string(buff))
 	conn.Write([]byte("000007"))
 }
