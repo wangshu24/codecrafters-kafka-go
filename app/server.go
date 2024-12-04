@@ -27,7 +27,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	buff := []byte{}
+	buff := make([]byte, 1024)
 	length, connErr := conn.Read(buff)
 	fmt.Println(string(buff))
 	if connErr != nil {
