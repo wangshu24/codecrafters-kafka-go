@@ -33,7 +33,6 @@ func main() {
 	message := string(buff)
 	
 	fmt.Println("String: ", message)
-	fmt.Println("bytes: ",buff[12:21])
 	
 	if connErr != nil {
 		fmt.Println("Error reading from connection: ", connErr.Error())
@@ -46,16 +45,18 @@ func main() {
 	}
 
 	msgSize := binary.BigEndian.Uint32(buff[:4])
-	fmt.Println(msgSize)
+	fmt.Println("message size: ", msgSize)
 
 	apiKey := binary.BigEndian.Uint16(buff[4:6])
-	fmt.Println(apiKey)
+	fmt.Println("api key: ", apiKey)
 
 	apiVer := binary.BigEndian.Uint16(buff[6:8])
-	fmt.Println(apiVer)
+	fmt.Println("api version: ", apiVer)
 
 	corrId := binary.BigEndian.Uint32(buff[8:12])
-	fmt.Println(corrId)
+	fmt.Println("correlation ID: ", corrId)
 	
-	conn.Write([]byte{00,00,00,00,00,00,00,07})
+	// err := binary.Write(buff[8:12], binary.LittleEndian, corrId)
+
+	conn.Write([]byte(buff[8:12]))
 }
