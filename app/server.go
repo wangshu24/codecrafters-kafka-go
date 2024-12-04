@@ -29,7 +29,8 @@ func main() {
 
 	buff := make([]byte, 1024)
 	length, connErr := conn.Read(buff)
-	fmt.Println("String: ",string(buff))
+	message := string(buff)
+	fmt.Println("String: ", message)
 	if connErr != nil {
 		fmt.Println("Error reading from connection: ", connErr.Error())
 		os.Exit(1)
