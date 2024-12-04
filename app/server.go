@@ -42,5 +42,5 @@ func main() {
 
 	fmt.Println(buff)
 
-	conn.Write([]byte{0,0,0,0,0,0,0,7})
+	conn.Write(buff[12:21])
 }
