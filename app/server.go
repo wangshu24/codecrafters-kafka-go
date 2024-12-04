@@ -41,7 +41,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("bytes: ",buff)
+	fmt.Println("bytes: ",buff[12:21])
 
 	conn.Write(buff[12:21])
 }
