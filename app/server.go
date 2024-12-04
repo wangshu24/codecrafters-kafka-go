@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/binary"
 	"fmt"
 	"net"
 	"os"
@@ -30,7 +31,10 @@ func main() {
 	buff := make([]byte, 1024)
 	length, connErr := conn.Read(buff)
 	message := string(buff)
+	
 	fmt.Println("String: ", message)
+	fmt.Println("bytes: ",buff[12:21])
+	
 	if connErr != nil {
 		fmt.Println("Error reading from connection: ", connErr.Error())
 		os.Exit(1)
@@ -41,7 +45,17 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("bytes: ",buff[12:21])
+	msgSize := binary.BigEndian.Uint32(buff[:4])
+	fmt.Println(msgSize)
 
-	conn.Write(buff[12:21])
+	apiKey := binary.BigEndian.Uint16(buff[4:6])
+	fmt.Println(apiKey)
+
+	apiVer := binary.BigEndian.Uint16(buff[6:8])
+	fmt.Println(apiVer)
+
+	corrId := binary.BigEndian.Uint32(buff[8:12])
+	fmt.Println(corrId)
+	
+	conn.Write([]byte{00,00,00,00,00,00,00,07})
 }
